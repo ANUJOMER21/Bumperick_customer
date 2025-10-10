@@ -1,0 +1,22 @@
+package com.bumperpick.bumperickUser.Repository
+
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.provider.ContactsContract.CommonDataKinds.Phone
+import com.bumperpick.bumperickUser.API.New_model.profile_model
+import com.bumperpick.bumperpickvendor.API.Model.success_model
+import java.io.File
+
+interface AuthRepository {
+
+    suspend fun checkAlreadyLogin(): Result<Boolean>
+    suspend fun login(mobileNumber: String): Result<String>
+    suspend fun sendOtp(mobileNumber: String): Result<String>
+    suspend fun resendOtp(mobileNumber: String): Result<String>
+    suspend fun verifyOtp(mobileNumber: String,otp: String): Result<Boolean>
+    suspend fun getProfile():Result<profile_model>
+
+    suspend fun updatefirbase_token():Result<success_model>
+
+    suspend fun sendLocation(lat: Double, long: Double,city: String=""):Result<success_model>
+    suspend fun updateProfile(image: File?,name:String,email: String,phone: String,dob: String,city: String):Result<profile_model>
+}
