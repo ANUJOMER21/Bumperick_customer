@@ -2,7 +2,8 @@
 
 <div align="center">
   <img src="app/src/main/ic_launcher_bp-playstore.png" alt="BumperPick Logo" width="120" height="120"/>
-  
+
+  [![Documentation](https://img.shields.io/badge/docs-website-purple.svg)](https://anujomer21.github.io/Bumperick_customer/)
   <h3>🎯 A Modern Android Customer App for Offers, Events, Contests & Campaigns</h3>
   
   [![Android](https://img.shields.io/badge/Android-28%2B-green.svg)](https://developer.android.com)
