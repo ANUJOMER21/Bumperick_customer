@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BumperPick - Modern Android Customer App</title>
+    <title>BumperPick - Modern Android Customer App for Offers, Events & Contests</title>
+    <meta name="description" content="BumperPick is a comprehensive Android app built with Kotlin & Jetpack Compose that connects customers with local businesses through offers, events, contests, and marketing campaigns.">
+    <meta name="keywords" content="Android, Kotlin, Jetpack Compose, Customer App, Offers, Events, Contests, BumperPick">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="BumperPick - Modern Android Customer App">
+    <meta property="og:description" content="Connect customers with local businesses through offers, events, contests & campaigns">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anujomer21.github.io/Bumperick_customer/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../app/src/main/ic_launcher_bp-playstore.png">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
         
         * {
             margin: 0;
@@ -16,11 +29,42 @@
         :root {
             --primary: #A40006;
             --primary-dark: #7d0005;
+            --primary-light: #ff4757;
             --secondary: #3B82F6;
+            --secondary-dark: #1e40af;
             --accent: #8B5CF6;
-            --dark: #1a1a1a;
-            --gray: #6b7280;
-            --light-gray: #f3f4f6;
+            --accent-light: #a78bfa;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --light-gray: #f8fafc;
+            --white: #ffffff;
+            --surface: #ffffff;
+            --surface-hover: #f8fafc;
+            --border: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+            --radius-sm: 0.375rem;
+            --radius: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-2xl: 2rem;
+            --radius-full: 9999px;
         }
 
         body {
@@ -28,32 +72,88 @@
             line-height: 1.6;
             color: var(--dark);
             overflow-x: hidden;
+            background: var(--white);
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Hero Section */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-top: 80px;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveBackground 20s linear infinite;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes moveBackground {
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
+            animation: movePattern 20s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes movePattern {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+            100% { transform: translate(60px, 60px); }
         }
 
         .hero-content {
@@ -61,64 +161,185 @@
             z-index: 2;
             text-align: center;
             color: white;
-            max-width: 900px;
-            padding: 40px 20px;
+            max-width: 1200px;
+            padding: 60px 24px;
         }
 
         .app-icon {
-            width: 140px;
-            height: 140px;
-            background: white;
-            border-radius: 32px;
-            margin: 0 auto 40px;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-2xl);
+            margin: 0 auto 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 64px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            font-size: 80px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             animation: float 3s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .app-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -0.02em;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-bottom: 40px;
+            font-size: 1.75rem;
+            font-weight: 400;
+            margin-bottom: 32px;
             opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 48px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
         }
 
         .stat-badges {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 40px;
+            margin-top: 48px;
         }
 
         .stat-badge {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            padding: 15px 30px;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.2);
-            font-weight: 500;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 16px 28px;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-badge:hover::before {
+            left: 100%;
         }
 
         .stat-badge:hover {
-            background: rgba(255,255,255,0.25);
+            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-cta {
+            margin-top: 56px;
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            padding: 20px 40px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-hero:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary-hero {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary-hero:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        .btn-secondary-hero {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary-hero:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-3px) scale(1.05);
         }
 
         /* Navigation */
@@ -126,13 +347,15 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 16px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             opacity: 0;
-            animation: slideDown 0.5s ease forwards 0.5s;
+            animation: slideDown 0.6s ease forwards 0.3s;
         }
 
         @keyframes slideDown {
@@ -140,129 +363,440 @@
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: translateY(-1px);
+        }
+
+        .nav-logo-image {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-logo:hover .nav-logo-image {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-logo-text {
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 32px;
             list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
         }
 
         .nav-links a {
             color: var(--dark);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--radius);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 0.1;
         }
 
         .nav-links a:hover {
             color: var(--primary);
+            transform: translateY(-1px);
         }
+
+        .nav-links a span {
+            position: relative;
+            z-index: 1;
+        }
+
 
         /* Container */
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         section {
             padding: 120px 0;
+            position: relative;
         }
 
         .section-title {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             color: var(--dark);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
         .section-subtitle {
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--gray);
-            margin-bottom: 60px;
-            max-width: 600px;
+            margin-bottom: 80px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Screenshots Gallery */
+        .screenshots-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .screenshots-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(164, 0, 6, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .screenshot-card {
+            background: var(--surface);
+            border-radius: var(--radius-2xl);
+            padding: 24px;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.05),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .screenshot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(164, 0, 6, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--radius-2xl);
+        }
+
+        .screenshot-card:hover::before {
+            opacity: 1;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-xl);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .screenshot-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .screenshot-overlay {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            right: 24px;
+            bottom: 24px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            border-radius: var(--radius-xl);
+            z-index: 2;
+        }
+
+        .screenshot-card:hover .screenshot-overlay {
+            opacity: 1;
+        }
+
+        .screenshot-overlay .zoom-icon {
+            color: white;
+            font-size: 2.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Modal for Screenshots */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        .close:hover {
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); }
+            to { transform: scale(1); }
         }
 
         /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 48px;
+            margin-top: 80px;
         }
 
         .feature-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid #f0f0f0;
+            background: var(--surface);
+            border-radius: var(--radius-2xl);
+            padding: 48px;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.05),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(164, 0, 6, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--radius-2xl);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(-16px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            border-color: var(--border-hover);
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 16px;
+            width: 88px;
+            height: 88px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 24px;
+            font-size: 40px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .feature-card:hover .feature-icon::before {
+            left: 100%;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 16px;
+            font-size: 1.75rem;
+            margin-bottom: 20px;
             color: var(--dark);
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
         }
 
         .feature-card p {
             color: var(--gray);
-            line-height: 1.8;
+            line-height: 1.7;
+            font-size: 1.125rem;
+            margin-bottom: 24px;
         }
 
         .feature-list {
             list-style: none;
-            margin-top: 20px;
+            margin-top: 24px;
         }
 
         .feature-list li {
-            padding: 8px 0;
+            padding: 14px 0;
             color: var(--gray);
             position: relative;
-            padding-left: 24px;
+            padding-left: 32px;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            line-height: 1.5;
         }
 
         .feature-list li::before {
-            content: '→';
+            content: '✓';
             position: absolute;
             left: 0;
-            color: var(--primary);
+            color: var(--success);
             font-weight: bold;
+            font-size: 1.25rem;
+            background: rgba(16, 185, 129, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .feature-list li:hover {
+            color: var(--dark);
+            transform: translateX(4px);
         }
 
         /* Tech Stack */
@@ -462,6 +996,95 @@
             margin-top: 20px;
         }
 
+        /* API Documentation Styles */
+        .api-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .api-category {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .api-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .api-endpoints {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .api-endpoint {
+            background: var(--light-gray);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .method {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .method.get {
+            background: var(--success);
+            color: white;
+        }
+
+        .method.post {
+            background: var(--primary);
+            color: white;
+        }
+
+        .method.put {
+            background: var(--warning);
+            color: white;
+        }
+
+        .method.delete {
+            background: var(--error);
+            color: white;
+        }
+
+        .url {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--dark);
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .endpoint-desc {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -480,6 +1103,15 @@
                 display: none;
             }
 
+            .nav-logo-text {
+                display: none;
+            }
+
+            .nav-logo-image {
+                width: 35px;
+                height: 35px;
+            }
+
             .features-grid {
                 grid-template-columns: 1fr;
             }
@@ -492,8 +1124,16 @@
                 grid-template-columns: 1fr;
             }
 
+            .api-categories {
+                grid-template-columns: 1fr;
+            }
+
             .cta-section h2 {
                 font-size: 2rem;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             }
         }
 
@@ -506,27 +1146,187 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">BumperPick</div>
+            <div class="nav-logo">
+                <img src="../app/src/main/ic_launcher_bp-playstore.png" alt="BumperPick Logo" class="nav-logo-image">
+                <span class="nav-logo-text">BumperPick</span>
+            </div>
             <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#tech">Technology</a></li>
-                <li><a href="#architecture">Architecture</a></li>
-                <li><a href="#start">Get Started</a></li>
+                <li><a href="#screenshots"><span>Screenshots</span></a></li>
+                <li><a href="#features"><span>Features</span></a></li>
+                <li><a href="#tech"><span>Technology</span></a></li>
+                <li><a href="#architecture"><span>Architecture</span></a></li>
+                <li><a href="#api"><span>API Docs</span></a></li>
+                <li><a href="#start"><span>Get Started</span></a></li>
             </ul>
         </div>
     </nav>
 
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div class="hero">
         <div class="hero-content">
-            <div class="app-icon">🎯</div>
-            <h1>BumperPick</h1>
-            <p class="hero-subtitle">Connect customers with local businesses through offers, events, contests & campaigns</p>
-            <div class="stat-badges">
-                <div class="stat-badge">Android 9.0+</div>
-                <div class="stat-badge">Kotlin 2.0</div>
-                <div class="stat-badge">Jetpack Compose</div>
-                <div class="stat-badge">Material 3</div>
+            <div class="app-icon">
+                <img src="../app/src/main/ic_launcher_bp-playstore.png" alt="BumperPick App Icon" style="width: 100px; height: 100px; border-radius: 20px;">
             </div>
+            <h1>BumperPick</h1>
+            <p class="hero-subtitle">Modern Android Customer App for Offers, Events & Contests</p>
+            <p class="hero-description">Connect customers with local businesses through comprehensive offers, exciting events, engaging contests, and targeted marketing campaigns. Built with cutting-edge Android technologies for the best user experience.</p>
+            <div class="stat-badges">
+                <div class="stat-badge">📱 Android 9.0+</div>
+                <div class="stat-badge">⚡ Kotlin 2.0</div>
+                <div class="stat-badge">🎨 Jetpack Compose</div>
+                <div class="stat-badge">🎯 Material 3</div>
+                <div class="stat-badge">🏗️ MVVM Architecture</div>
+                <div class="stat-badge">🔐 JWT Authentication</div>
+            </div>
+            <div class="hero-cta">
+                <a href="#screenshots" class="btn-hero btn-primary-hero">
+                    📸 View Screenshots
+                </a>
+                <a href="https://github.com/ANUJOMER21/Bumperick_customer" class="btn-hero btn-secondary-hero" target="_blank">
+                    🔗 GitHub Repository
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screenshots Gallery -->
+    <section id="screenshots" class="screenshots-section">
+        <div class="container">
+            <h2 class="section-title">App Screenshots</h2>
+            <p class="section-subtitle">Experience the beautiful and intuitive interface of BumperPick</p>
+            
+            <div class="screenshots-grid">
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022627_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022627_Bumperpick.png" alt="BumperPick Home Screen">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022629_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022629_Bumperpick.png" alt="BumperPick Login Screen">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022632_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022632_Bumperpick.png" alt="BumperPick OTP Verification">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022642_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022642_Bumperpick.png" alt="BumperPick Offers Screen">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022644_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022644_Bumperpick.png" alt="BumperPick Offer Details">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022648_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022648_Bumperpick.png" alt="BumperPick Categories">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022652_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022652_Bumperpick.png" alt="BumperPick Contest Screen">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022708_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022708_Bumperpick.png" alt="BumperPick Event Registration">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022719_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022719_Bumperpick.png" alt="BumperPick Profile Screen">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022722_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022722_Bumperpick.png" alt="BumperPick Support">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022726_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022726_Bumperpick.png" alt="BumperPick Settings">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022730_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022730_Bumperpick.png" alt="BumperPick Location Services">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022743_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022743_Bumperpick.png" alt="BumperPick Favorites">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022750_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022750_Bumperpick.png" alt="BumperPick Cart">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022757_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022757_Bumperpick.png" alt="BumperPick Event Details">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022759_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022759_Bumperpick.png" alt="BumperPick Contest Form">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-card" onclick="openModal('../Screenshot_20251011-022801_Bumperpick.png')">
+                    <img src="../Screenshot_20251011-022801_Bumperpick.png" alt="BumperPick Winner List">
+                    <div class="screenshot-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Screenshot">
         </div>
     </div>
 
@@ -538,73 +1338,127 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🏠</div>
-                    <h3>Discovery & Navigation</h3>
-                    <p>Intelligent home feed with trending offers and interactive banners</p>
+                    <h3>Smart Discovery & Navigation</h3>
+                    <p>Experience intelligent content discovery with our advanced home feed featuring trending offers, interactive banners, and personalized recommendations that adapt to your preferences and location.</p>
                     <ul class="feature-list">
-                        <li>Smart category filtering</li>
-                        <li>Location-based services</li>
-                        <li>Personalized recommendations</li>
-                        <li>Quick search functionality</li>
+                        <li>AI-powered content recommendation</li>
+                        <li>Interactive promotional banners</li>
+                        <li>Smart category-based filtering</li>
+                        <li>Location-aware content delivery</li>
+                        <li>Personalized user feed</li>
+                        <li>Advanced search with filters</li>
                     </ul>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <h3>Offers & Deals</h3>
-                    <p>Comprehensive deal management with favorites and history tracking</p>
+                    <h3>Comprehensive Offers & Deals</h3>
+                    <p>Discover amazing deals and offers from local businesses with detailed information, smart cart functionality, and seamless social sharing capabilities for the best shopping experience.</p>
                     <ul class="feature-list">
-                        <li>Detailed offer information</li>
-                        <li>Smart cart functionality</li>
-                        <li>Social sharing features</li>
-                        <li>Usage history tracking</li>
+                        <li>Rich offer details with media</li>
+                        <li>Smart shopping cart system</li>
+                        <li>Favorites and wishlist management</li>
+                        <li>Social sharing integration</li>
+                        <li>Usage history and analytics</li>
+                        <li>QR code redemption</li>
                     </ul>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🎪</div>
-                    <h3>Events & Campaigns</h3>
-                    <p>Discover and register for local events with seamless participation</p>
+                    <h3>Events & Campaign Management</h3>
+                    <p>Stay connected with local events and marketing campaigns through our comprehensive event discovery platform with easy registration and participation tracking.</p>
                     <ul class="feature-list">
                         <li>City-based event discovery</li>
-                        <li>One-tap registration</li>
-                        <li>Campaign management</li>
-                        <li>Event reminders</li>
+                        <li>One-tap event registration</li>
+                        <li>Campaign participation tracking</li>
+                        <li>Event reminders and notifications</li>
+                        <li>Event details and requirements</li>
+                        <li>Registration form management</li>
                     </ul>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🏆</div>
-                    <h3>Contest System</h3>
-                    <p>Complete contest lifecycle from registration to winner announcements</p>
+                    <h3>Advanced Contest System</h3>
+                    <p>Participate in exciting contests and competitions with our complete contest management system featuring media submissions, real-time updates, and winner announcements.</p>
                     <ul class="feature-list">
                         <li>Easy contest registration</li>
-                        <li>Media submission support</li>
-                        <li>Real-time winner updates</li>
-                        <li>Participation tracking</li>
+                        <li>Multi-media submission support</li>
+                        <li>Real-time contest updates</li>
+                        <li>Winner announcement system</li>
+                        <li>Participation history tracking</li>
+                        <li>Contest leaderboards</li>
                     </ul>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🔐</div>
-                    <h3>Secure Authentication</h3>
-                    <p>Multiple authentication methods with seamless user experience</p>
+                    <h3>Secure Authentication System</h3>
+                    <p>Multiple secure authentication methods including OTP-based phone verification and Google Sign-in integration with JWT token management for enhanced security.</p>
                     <ul class="feature-list">
-                        <li>OTP-based phone auth</li>
+                        <li>OTP-based phone authentication</li>
                         <li>Google Sign-in integration</li>
                         <li>JWT token management</li>
-                        <li>Auto-refresh sessions</li>
+                        <li>Automatic session refresh</li>
+                        <li>Biometric authentication support</li>
+                        <li>Account security features</li>
                     </ul>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📍</div>
-                    <h3>Location Intelligence</h3>
-                    <p>Advanced location services for personalized nearby recommendations</p>
+                    <h3>Location Intelligence Services</h3>
+                    <p>Advanced location-based services powered by Google Maps integration providing personalized recommendations, distance calculations, and seamless navigation.</p>
                     <ul class="feature-list">
-                        <li>Auto location detection</li>
-                        <li>Distance-based filtering</li>
-                        <li>Address geocoding</li>
-                        <li>Maps integration</li>
+                        <li>Automatic location detection</li>
+                        <li>Distance-based offer filtering</li>
+                        <li>Address geocoding services</li>
+                        <li>Google Maps integration</li>
+                        <li>Location-based notifications</li>
+                        <li>Nearby business discovery</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>User Profile & Account Management</h3>
+                    <p>Comprehensive user account management with profile customization, preferences settings, and secure data management for personalized experiences.</p>
+                    <ul class="feature-list">
+                        <li>Profile customization options</li>
+                        <li>Account settings management</li>
+                        <li>Privacy and security controls</li>
+                        <li>Data export capabilities</li>
+                        <li>Account deletion options</li>
+                        <li>Notification preferences</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Support & Help Center</h3>
+                    <p>Comprehensive support system with FAQ section, ticket management, and direct communication channels for user assistance and issue resolution.</p>
+                    <ul class="feature-list">
+                        <li>Comprehensive FAQ section</li>
+                        <li>Support ticket system</li>
+                        <li>Live chat integration</li>
+                        <li>Email support channels</li>
+                        <li>Help documentation</li>
+                        <li>Issue tracking system</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Smart Notifications</h3>
+                    <p>Intelligent notification system powered by Firebase Cloud Messaging delivering personalized alerts for offers, events, contests, and important updates.</p>
+                    <ul class="feature-list">
+                        <li>Firebase Cloud Messaging</li>
+                        <li>Personalized notification preferences</li>
+                        <li>Push notification management</li>
+                        <li>In-app notification center</li>
+                        <li>Notification history tracking</li>
+                        <li>Smart notification scheduling</li>
                     </ul>
                 </div>
             </div>
@@ -613,66 +1467,103 @@
 
     <section id="tech" class="tech-section">
         <div class="container">
-            <h2 class="section-title">Built with Modern Tech</h2>
-            <p class="section-subtitle">Leveraging the latest Android development technologies</p>
+            <h2 class="section-title">Built with Modern Technology Stack</h2>
+            <p class="section-subtitle">Leveraging the latest Android development technologies and best practices for optimal performance and user experience</p>
 
             <div class="tech-categories">
                 <div class="tech-category">
-                    <h3>Frontend</h3>
+                    <h3>🎨 Frontend & UI</h3>
                     <div class="tech-tags">
-                        <span class="tech-tag">Jetpack Compose</span>
-                        <span class="tech-tag">Material 3</span>
-                        <span class="tech-tag">Navigation</span>
-                        <span class="tech-tag">Coil</span>
-                        <span class="tech-tag">Animations</span>
+                        <span class="tech-tag" title="Modern declarative UI toolkit">Jetpack Compose 2025.05.00</span>
+                        <span class="tech-tag" title="Latest Material Design system">Material 3</span>
+                        <span class="tech-tag" title="Type-safe navigation">Navigation Compose 2.8.6</span>
+                        <span class="tech-tag" title="Image loading library">Coil 2.5.0</span>
+                        <span class="tech-tag" title="Custom animations">Lottie Animations</span>
+                        <span class="tech-tag" title="Custom fonts">Satoshi Font Family</span>
                     </div>
                 </div>
 
                 <div class="tech-category">
-                    <h3>Architecture</h3>
+                    <h3>🏗️ Architecture & Patterns</h3>
                     <div class="tech-tags">
-                        <span class="tech-tag">MVVM</span>
-                        <span class="tech-tag">Repository Pattern</span>
-                        <span class="tech-tag">Koin DI</span>
-                        <span class="tech-tag">Clean Code</span>
+                        <span class="tech-tag" title="Model-View-ViewModel pattern">MVVM Architecture</span>
+                        <span class="tech-tag" title="Data access abstraction">Repository Pattern</span>
+                        <span class="tech-tag" title="Dependency injection">Koin 3.5.3</span>
+                        <span class="tech-tag" title="Clean code principles">Clean Architecture</span>
+                        <span class="tech-tag" title="Single source of truth">State Management</span>
+                        <span class="tech-tag" title="Reactive programming">Flow & StateFlow</span>
                     </div>
                 </div>
 
                 <div class="tech-category">
-                    <h3>Backend</h3>
+                    <h3>🌐 Network & API</h3>
                     <div class="tech-tags">
-                        <span class="tech-tag">Retrofit</span>
-                        <span class="tech-tag">OkHttp</span>
-                        <span class="tech-tag">Gson</span>
-                        <span class="tech-tag">JWT Auth</span>
+                        <span class="tech-tag" title="Type-safe HTTP client">Retrofit 2.9.0</span>
+                        <span class="tech-tag" title="HTTP client library">OkHttp 4.12.0</span>
+                        <span class="tech-tag" title="JSON serialization">Gson 2.10.1</span>
+                        <span class="tech-tag" title="Secure authentication">JWT Token Auth</span>
+                        <span class="tech-tag" title="Network interceptors">Request/Response Logging</span>
+                        <span class="tech-tag" title="Error handling">Custom Error Handling</span>
                     </div>
                 </div>
 
                 <div class="tech-category">
-                    <h3>Google Services</h3>
+                    <h3>🗺️ Google Services</h3>
                     <div class="tech-tags">
-                        <span class="tech-tag">Maps SDK</span>
-                        <span class="tech-tag">Places API</span>
-                        <span class="tech-tag">Firebase</span>
-                        <span class="tech-tag">FCM</span>
+                        <span class="tech-tag" title="Maps integration">Maps SDK 18.2.0</span>
+                        <span class="tech-tag" title="Places API integration">Places API 3.3.0</span>
+                        <span class="tech-tag" title="Location services">Location Services 21.0.1</span>
+                        <span class="tech-tag" title="Maps Compose integration">Maps Compose 4.3.3</span>
+                        <span class="tech-tag" title="Firebase services">Firebase BOM 34.0.0</span>
+                        <span class="tech-tag" title="Cloud messaging">Firebase Cloud Messaging</span>
                     </div>
                 </div>
 
                 <div class="tech-category">
-                    <h3>Data</h3>
+                    <h3>💾 Data Management</h3>
                     <div class="tech-tags">
-                        <span class="tech-tag">DataStore</span>
-                        <span class="tech-tag">SharedPrefs</span>
-                        <span class="tech-tag">In-Memory Cache</span>
+                        <span class="tech-tag" title="Modern data storage">DataStore Preferences 1.1.6</span>
+                        <span class="tech-tag" title="Legacy preferences">SharedPreferences</span>
+                        <span class="tech-tag" title="Memory caching">In-Memory Cache</span>
+                        <span class="tech-tag" title="Data persistence">Local Storage</span>
+                        <span class="tech-tag" title="Offline support">Offline Capabilities</span>
+                        <span class="tech-tag" title="Data synchronization">Sync Management</span>
                     </div>
                 </div>
 
                 <div class="tech-category">
-                    <h3>Media</h3>
+                    <h3>🎬 Media & Content</h3>
                     <div class="tech-tags">
-                        <span class="tech-tag">ExoPlayer</span>
-                        <span class="tech-tag">ZXing QR</span>
-                        <span class="tech-tag">Image Loader</span>
+                        <span class="tech-tag" title="Video player">ExoPlayer 1.5.0</span>
+                        <span class="tech-tag" title="QR code scanning">ZXing 3.5.1</span>
+                        <span class="tech-tag" title="Image processing">Coil Image Loading</span>
+                        <span class="tech-tag" title="Web content">WebView 1.7.0</span>
+                        <span class="tech-tag" title="Camera integration">CameraX</span>
+                        <span class="tech-tag" title="File handling">File Management</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>🔐 Security & Authentication</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag" title="Credential management">AndroidX Credentials 1.3.0</span>
+                        <span class="tech-tag" title="Google Identity">Google Identity Services 1.1.1</span>
+                        <span class="tech-tag" title="Biometric auth">Biometric Authentication</span>
+                        <span class="tech-tag" title="Secure storage">Encrypted Storage</span>
+                        <span class="tech-tag" title="Permission handling">Runtime Permissions</span>
+                        <span class="tech-tag" title="Security headers">Network Security</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>🛠️ Development Tools</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag" title="Build system">Gradle 8.7.3</span>
+                        <span class="tech-tag" title="Kotlin language">Kotlin 2.0.0</span>
+                        <span class="tech-tag" title="Code obfuscation">ProGuard</span>
+                        <span class="tech-tag" title="Debug tools">Android Studio</span>
+                        <span class="tech-tag" title="Version control">Git</span>
+                        <span class="tech-tag" title="Testing framework">JUnit & Espresso</span>
                     </div>
                 </div>
             </div>
@@ -707,46 +1598,319 @@
 
     <section id="start">
         <div class="container">
-            <h2 class="section-title">Quick Start Guide</h2>
-            <p class="section-subtitle">Get up and running in minutes</p>
+            <h2 class="section-title">Complete Setup Guide</h2>
+            <p class="section-subtitle">Detailed step-by-step instructions to get BumperPick running on your development environment</p>
 
             <div class="install-steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Clone Repository</h3>
-                    <p>Get the source code from your repository</p>
+                    <h3>Prerequisites & Environment Setup</h3>
+                    <p>Ensure you have all required tools and SDKs installed before proceeding</p>
+                    <ul class="feature-list">
+                        <li>Android Studio Arctic Fox (2020.3.1) or later</li>
+                        <li>JDK 8 or higher (JDK 11 recommended)</li>
+                        <li>Android SDK API Level 28-34</li>
+                        <li>Kotlin 2.0.0</li>
+                        <li>Gradle 8.7.3</li>
+                        <li>Git for version control</li>
+                    </ul>
                     <div class="code-snippet">
-                        <code>git clone &lt;repository-url&gt;</code><br>
-                        <code>cd Bumperick</code>
+                        <code># Check Java version</code><br>
+                        <code>java -version</code><br><br>
+                        <code># Check Android SDK</code><br>
+                        <code>sdkmanager --list</code>
                     </div>
                 </div>
 
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Configure API Keys</h3>
-                    <p>Set up your Google Maps API key and Firebase configuration</p>
-                    <ul class="feature-list">
-                        <li>Add Google Maps API key in AndroidManifest.xml</li>
-                        <li>Place google-services.json in app directory</li>
-                        <li>Update base URL in AppModule.kt if needed</li>
-                    </ul>
+                    <h3>Clone Repository</h3>
+                    <p>Get the source code from the GitHub repository</p>
+                    <div class="code-snippet">
+                        <code># Clone the repository</code><br>
+                        <code>git clone https://github.com/ANUJOMER21/Bumperick_customer.git</code><br>
+                        <code>cd Bumperick_customer</code><br><br>
+                        <code># Checkout the main branch</code><br>
+                        <code>git checkout main</code>
+                    </div>
                 </div>
 
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Build Project</h3>
-                    <p>Sync dependencies and build the application</p>
+                    <h3>Configure Google Maps API</h3>
+                    <p>Set up Google Maps integration for location services</p>
+                    <ul class="feature-list">
+                        <li>Visit Google Cloud Console</li>
+                        <li>Create a new project or select existing one</li>
+                        <li>Enable Maps SDK for Android API</li>
+                        <li>Enable Places API</li>
+                        <li>Create API key with proper restrictions</li>
+                        <li>Add API key to AndroidManifest.xml</li>
+                    </ul>
                     <div class="code-snippet">
-                        <code>./gradlew build</code>
+                        <code># In app/src/main/AndroidManifest.xml</code><br>
+                        <code>&lt;meta-data</code><br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;android:name="com.google.android.geo.API_KEY"</code><br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;android:value="YOUR_API_KEY_HERE" /&gt;</code>
                     </div>
                 </div>
 
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Run Application</h3>
-                    <p>Deploy to your device or emulator</p>
+                    <h3>Firebase Configuration</h3>
+                    <p>Set up Firebase for cloud messaging and analytics</p>
+                    <ul class="feature-list">
+                        <li>Create Firebase project at console.firebase.google.com</li>
+                        <li>Add Android app with package name: com.bumperpick.bumperickUser</li>
+                        <li>Download google-services.json</li>
+                        <li>Place file in app/ directory</li>
+                        <li>Enable Firebase Cloud Messaging</li>
+                        <li>Enable Firebase Analytics</li>
+                    </ul>
                     <div class="code-snippet">
-                        <code>./gradlew installDebug</code>
+                        <code># File structure should look like:</code><br>
+                        <code>app/</code><br>
+                        <code>├── google-services.json</code><br>
+                        <code>├── build.gradle.kts</code><br>
+                        <code>└── src/main/</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>API Configuration</h3>
+                    <p>Configure the backend API endpoint and authentication</p>
+                    <div class="code-snippet">
+                        <code># Update app/src/main/java/com/bumperpick/bumperickUser/DI/AppModule.kt</code><br>
+                        <code>single {</code><br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;Retrofit.Builder()</code><br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.baseUrl("http://65.0.78.200/") // Your API URL</code><br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.addConverterFactory(GsonConverterFactory.create())</code><br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.build()</code><br>
+                        <code>}</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <h3>Build Configuration</h3>
+                    <p>Verify build configuration and sync dependencies</p>
+                    <div class="code-snippet">
+                        <code># Sync project with Gradle files</code><br>
+                        <code>./gradlew clean</code><br>
+                        <code>./gradlew build</code><br><br>
+                        <code># Or use Android Studio:</code><br>
+                        <code># File → Sync Project with Gradle Files</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <h3>Run Application</h3>
+                    <p>Deploy the app to your device or emulator</p>
+                    <ul class="feature-list">
+                        <li>Connect Android device with USB debugging enabled</li>
+                        <li>Or start Android emulator</li>
+                        <li>Run the application from Android Studio</li>
+                        <li>Or use command line build</li>
+                    </ul>
+                    <div class="code-snippet">
+                        <code># Command line build and install</code><br>
+                        <code>./gradlew assembleDebug</code><br>
+                        <code>./gradlew installDebug</code><br><br>
+                        <code># Or build release version</code><br>
+                        <code>./gradlew assembleRelease</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">8</div>
+                    <h3>Testing & Verification</h3>
+                    <p>Verify all features are working correctly</p>
+                    <ul class="feature-list">
+                        <li>Test phone number authentication</li>
+                        <li>Verify Google Sign-in functionality</li>
+                        <li>Check location services and maps</li>
+                        <li>Test offers and events loading</li>
+                        <li>Verify push notifications</li>
+                        <li>Test contest registration</li>
+                    </ul>
+                    <div class="code-snippet">
+                        <code># Run unit tests</code><br>
+                        <code>./gradlew test</code><br><br>
+                        <code># Run instrumented tests</code><br>
+                        <code>./gradlew connectedAndroidTest</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Documentation Section -->
+    <section id="api" class="tech-section">
+        <div class="container">
+            <h2 class="section-title">API Documentation</h2>
+            <p class="section-subtitle">Comprehensive API reference for BumperPick backend integration</p>
+
+            <div class="api-categories">
+                <div class="api-category">
+                    <h3>🔐 Authentication APIs</h3>
+                    <div class="api-endpoints">
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/send-otp</span>
+                            </div>
+                            <p class="endpoint-desc">Send OTP to customer's phone number for authentication</p>
+                            <div class="code-snippet">
+                                <code>Request: { "mobile": "+1234567890" }</code><br>
+                                <code>Response: { "success": true, "message": "OTP sent" }</code>
+                            </div>
+                        </div>
+                        
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/verify-otp</span>
+                            </div>
+                            <p class="endpoint-desc">Verify OTP and authenticate user</p>
+                            <div class="code-snippet">
+                                <code>Request: { "mobile": "+1234567890", "otp": "123456" }</code><br>
+                                <code>Response: { "success": true, "token": "jwt_token", "user": {...} }</code>
+                            </div>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/auth-google</span>
+                            </div>
+                            <p class="endpoint-desc">Authenticate user with Google Sign-in</p>
+                            <div class="code-snippet">
+                                <code>Request: { "idToken": "google_id_token" }</code><br>
+                                <code>Response: { "success": true, "token": "jwt_token", "user": {...} }</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-category">
+                    <h3>🎯 Offers APIs</h3>
+                    <div class="api-endpoints">
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/offers</span>
+                            </div>
+                            <p class="endpoint-desc">Get offers list with filtering and pagination</p>
+                            <div class="code-snippet">
+                                <code>Request: { "page": 1, "limit": 20, "category_id": 1 }</code><br>
+                                <code>Response: { "offers": [...], "pagination": {...} }</code>
+                            </div>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/offers-details/{id}</span>
+                            </div>
+                            <p class="endpoint-desc">Get detailed information about specific offer</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/offers-history</span>
+                            </div>
+                            <p class="endpoint-desc">Get user's offer usage history</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-category">
+                    <h3>🎪 Events & Campaigns APIs</h3>
+                    <div class="api-endpoints">
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/events</span>
+                            </div>
+                            <p class="endpoint-desc">Get list of available events</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/campaigns</span>
+                            </div>
+                            <p class="endpoint-desc">Get list of marketing campaigns</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/campaign-registers/store</span>
+                            </div>
+                            <p class="endpoint-desc">Register for a campaign</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-category">
+                    <h3>🏆 Contest APIs</h3>
+                    <div class="api-endpoints">
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/contests</span>
+                            </div>
+                            <p class="endpoint-desc">Get list of available contests</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/contests/{id}</span>
+                            </div>
+                            <p class="endpoint-desc">Get detailed contest information</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/contest-registerations/create</span>
+                            </div>
+                            <p class="endpoint-desc">Register for a contest</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-category">
+                    <h3>👤 User Management APIs</h3>
+                    <div class="api-endpoints">
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/profile</span>
+                            </div>
+                            <p class="endpoint-desc">Get user profile information</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="url">/api/customer/profile/update</span>
+                            </div>
+                            <p class="endpoint-desc">Update user profile</p>
+                        </div>
+
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="url">/api/customer/favourites/my</span>
+                            </div>
+                            <p class="endpoint-desc">Get user's favorite offers</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -758,8 +1922,9 @@
             <h2>Ready to Get Started?</h2>
             <p>Build amazing customer experiences with BumperPick</p>
             <div class="cta-buttons">
-                <a href="#start" class="btn btn-primary">View Documentation</a>
-                <a href="https://github.com/ANUJOMER21/Bumperick_customer" class="btn btn-secondary">GitHub Repository</a>
+                <a href="#start" class="btn btn-primary">📖 View Setup Guide</a>
+                <a href="https://github.com/ANUJOMER21/Bumperick_customer" class="btn btn-secondary" target="_blank">🔗 GitHub Repository</a>
+                <a href="#screenshots" class="btn btn-secondary">📸 View Screenshots</a>
             </div>
         </div>
     </section>
@@ -771,5 +1936,190 @@
             <p class="footer-text">© 2025 BumperPick. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Modal functionality
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.classList.add('show');
+            modalImg.src = imageSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation scroll effect
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                nav.style.background = 'rgba(255,255,255,0.98)';
+                nav.style.backdropFilter = 'blur(20px)';
+            } else {
+                nav.style.background = 'rgba(255,255,255,0.95)';
+                nav.style.backdropFilter = 'blur(10px)';
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.feature-card, .tech-category, .api-category, .step, .screenshot-card');
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Copy to clipboard functionality for code snippets
+        document.querySelectorAll('.code-snippet').forEach(snippet => {
+            snippet.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Show temporary feedback
+                    const originalBg = this.style.backgroundColor;
+                    this.style.backgroundColor = '#10b981';
+                    setTimeout(() => {
+                        this.style.backgroundColor = originalBg;
+                    }, 200);
+                });
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < hero.offsetHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add loading animation to images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+            });
+            
+            if (img.complete) {
+                img.style.opacity = '1';
+            } else {
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s ease';
+            }
+        });
+
+        // Enhanced tech tag interactions
+        document.querySelectorAll('.tech-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            tag.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Statistics counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-badge');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/\D/g, ''));
+                if (target && target > 0) {
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        counter.textContent = counter.textContent.replace(/\d+/, Math.floor(current));
+                    }, 30);
+                }
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stat-badges');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
 </body>
 </html>
