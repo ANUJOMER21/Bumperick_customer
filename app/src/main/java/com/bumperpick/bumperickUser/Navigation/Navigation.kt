@@ -473,7 +473,7 @@ fun AppNavigation() {
                     navController.popBackStack()
                 },
                 onRegistrationSuccess = {
-                    show_toast("Registered Successfully", context)
+                    show_toast("Registration completed successfully", context)
                     navController.popBackStack()
                 }
             )
@@ -502,7 +502,7 @@ fun AppNavigation() {
                     navController.popBackStack()
                 },
                 onRegistrationSuccess = {
-                    show_toast("Registered Successfully", context)
+                    show_toast("Registration completed successfully", context)
                     navController.popBackStack()
                 }
             )
@@ -531,7 +531,7 @@ fun AppNavigation() {
                     navController.popBackStack()
                 },
                 onSubmissionSuccess = {
-                    show_toast("Submission Successfully", context)
+                    show_toast("Your entry submitted successfully", context)
                     navController.popBackStack()
                 }
             )

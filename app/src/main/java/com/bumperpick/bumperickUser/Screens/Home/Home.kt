@@ -131,7 +131,7 @@ fun CampaignSlider(goto: (gotoPage) -> Unit) {
 
         ) { page ->
             when (page) {
-                1 -> EventCard({ goto(gotoPage.Event) })
+                1 -> EventCard{ goto(gotoPage.Event) }
                 0-> CampaignCard { goto(gotoPage.Campaign) }
             }
         }
@@ -222,7 +222,13 @@ fun Home(
             }
             UiState.Loading -> {}
             is UiState.Success -> {
-                show_toast((fav_toogle as UiState.Success<success_model>).data.message,context)
+                val response=(fav_toogle as UiState.Success<success_model>).data
+                val  message =
+                    if(response.message.contains("Favourite added successfully"))
+                        "Offer added to favourites"
+                    else if(response.message.contains("Favourite removed successfully"))"Offer removed from favourites"
+                    else response.message
+                show_toast(message,context)
                 viewModel.free_fav()
             }
         }
@@ -254,8 +260,8 @@ fun Home(
                 // Category List
                 AnimatedVisibility(
                     visible = hide_cat,
-                    enter = fadeInTransition() + slideInFromBottom(),
-                    exit = fadeOutTransition() + slideOutToBottom(),
+                    enter =  slideInFromTop(),
+                    exit = slideOutToTop(),
                     modifier = Modifier
 
                 ) {
@@ -353,9 +359,9 @@ fun Home(
                         }
                         else {
                             Column {
-                                EventCityHeader() {
-                                    homeClick(HomeClick.EventIncity)
-                                }
+                                EventCard(text = "City today", removeIcon = true) {   homeClick(HomeClick.EventIncity) }
+                                Spacer(modifier = Modifier.height(6.dp))
+
                                 Card(
                                     shape = RoundedCornerShape(16.dp),
                                     modifier = Modifier.padding(horizontal = 16.dp),
@@ -484,7 +490,7 @@ private fun SearchCard(onSearchClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = "Search for reliance mart",
+                text = "Search",
                 color = Color.Gray,
                 fontFamily = satoshi,
                 fontSize = 16.sp
@@ -578,7 +584,10 @@ private fun CampaignCard(gotoEvent: () -> Unit) {
     }
 }
 @Composable
-private fun EventCard(gotoEvent: () -> Unit) {
+private fun EventCard(
+    removeIcon: Boolean=false,
+    text: String="Trending events",
+    gotoEvent: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color(0xff2F88FF).copy(alpha = 0.1f)),
         shape = RoundedCornerShape(16.dp),
@@ -600,13 +609,17 @@ private fun EventCard(gotoEvent: () -> Unit) {
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                AsyncImage(
-                    model = R.drawable.ticket_svgrepo_com,
-                    contentDescription = "Speaker Icon",
-                    modifier = Modifier.size(36.dp)
-                )
+
+                    AsyncImage(
+                        model =
+                            if(!removeIcon) R.drawable.ticket_svgrepo_com else R.drawable.speaker,
+                        contentDescription = "Speaker Icon",
+                        modifier = Modifier.size(36.dp)
+                    )
+                }
+
                 Text(
-                    text = "Trending events",
+                    text = text,
                     color = Color.Black,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -626,11 +639,10 @@ private fun EventCard(gotoEvent: () -> Unit) {
             )
         }
     }
-}
 
 @Composable
 private fun EventCityHeader(
-    text: String = "Events in the city",
+    text: String = "City today",
     onViewAllClick: () -> Unit = {}
 ) {
     Box(

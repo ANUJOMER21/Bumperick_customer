@@ -12,5 +12,6 @@ interface Contest_Repository {
     suspend fun getRegisteredContest(): Result<contestregistered>
     suspend fun deleteContest(id: String): Result<success_model>
     suspend fun contest_submissions(id: String,text_content: String,file: Uri?,file_url:String):Result<success_model>
+    suspend fun filterForShowWinner(data: com.bumperpick.bumperickUser.API.New_model.Constest_Model): com.bumperpick.bumperickUser.API.New_model.Constest_Model
 
 }

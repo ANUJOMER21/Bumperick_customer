@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +37,7 @@ import com.bumperpick.bumperickUser.API.New_model.contestregistered
 import com.bumperpick.bumperickUser.R
 import com.bumperpick.bumperickUser.Screens.Campaign.InfoRow
 import com.bumperpick.bumperickUser.Screens.Component.LocationCard
+import com.bumperpick.bumperickUser.Screens.Component.share
 import com.bumperpick.bumperickUser.Screens.Home.HomeClick
 import com.bumperpick.bumperickUser.Screens.Home.UiState
 import com.bumperpick.bumperickUser.ui.theme.BtnColor
@@ -190,7 +192,8 @@ fun Contest(
                                     contest.title.contains(searchContest, ignoreCase = true)
                                 }
                             }
-                            filteredContests=if(selectedTab==0) filteredContests.filter { it.is_registered==0 } else filteredContests.filter { it.is_registered==1 }
+                            filteredContests= if(selectedTab==0) filteredContests.filter { it.is_registered==0 } else filteredContests.filter { it.is_registered==1 }
+
                             Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                                 Icon(painter = painterResource(R.drawable.left),
                                     tint = blueColor,
@@ -327,6 +330,7 @@ fun ContestCard(
     onParticipateClick: (DataXXXXXXXXXXXXXX) -> Unit,
     onResultClick: (DataXXXXXXXXXXXXXX) -> Unit
 ) {
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
@@ -345,6 +349,8 @@ fun ContestCard(
                         .height(200.dp)
                         .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 )
+                share(modifier = Modifier.align(Alignment.TopEnd), message = "Check out this amazing contest", context = LocalContext.current)
+
 
             }
 
@@ -362,7 +368,9 @@ fun ContestCard(
                         fontWeight = FontWeight.Bold,
                         lineHeight = 28.sp
                     )
-                    if (contest.is_registered == 1 && contest.is_participated==1) {
+
+
+                    if (contest.show_winner) {
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "View result",
@@ -443,7 +451,7 @@ fun ContestCard(
                     // User has already participated - Show confirmation message
                     InfoRow(
                         icon = painterResource(R.drawable.check),
-                        text = "You have already participated in this contest",
+                        text = "You have participated in this contest",
                         iconTint = blueColor,
                         textColor = blueColor
                     )

@@ -242,4 +242,10 @@ class ContestViewmodel(
         fetchRegisteredContests()
         fetchLocation()
     }
+
+
+
+
+
+
 }

@@ -170,13 +170,17 @@ fun OfferScreen(
                                 SearchBar(
                                     searchQuery = categorySearchQuery,
                                     onSearchQueryChange = { categorySearchQuery = it },
-                                    placeholder = "Search for category"
+                                    placeholder = "Search for categories"
                                 )
                             }
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
-
+                        SectionHeader(
+                            title = "Subcategories",
+                            subtitle = "Select a subcategory"
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         CategoriesSection(
                             categoriesState = categoriesState,
                             searchQuery = categorySearchQuery,

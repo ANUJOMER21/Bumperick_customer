@@ -7,7 +7,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,7 +31,8 @@ import androidx.compose.ui.unit.sp
 import com.bumperpick.bumperickUser.ui.theme.satoshi
 
 class MainActivity : ComponentActivity() {
-
+    private var backPressedTime: Long = 0
+    private val backPressInterval: Long = 2000 // 2 seconds
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -59,6 +62,22 @@ class MainActivity : ComponentActivity() {
                         Log.d("FCM", "Subscribed to 'user' topic")
                     }
                 }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedTime + backPressInterval > System.currentTimeMillis()) {
+                    // Second press within time interval - exit app
+                    finish()
+                } else {
+                    // First press - show toast
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Press back again to exit",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                backPressedTime = System.currentTimeMillis()
+            }
+        })
 
         checkNotificationPermission()
         enableEdgeToEdge()

@@ -111,7 +111,12 @@ fun FavouriteScreen(
                 selectedId = null
                 val result = (favToggle as UiState.Success<success_model>).data as success_model
                 if (result.code in 200..300) {
-                    show_toast(result.message, context)
+                    val  message =
+                        if(result.message.contains("Favourite added successfully"))
+                            "Offer added to favourites"
+                        else if(result.message.contains("Favourite removed successfully"))"Offer removed from favourites"
+                        else result.message
+                    show_toast(message,context)
                     viewModel.getfav()
                 } else {
                     show_toast(result.message, context)
@@ -317,7 +322,7 @@ private fun FavouritesList(
                     modifier = Modifier.size(12.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
-                val text= if(offers.isEmpty()) "No favourite offers" else if(offers.size==1) "1 favourite offer " else "${offers.size}favourite offers"
+                val text= if(offers.isEmpty()) "No favourite offers" else if(offers.size==1) "1 favourite offer " else "${offers.size} favourite offers"
 
                 Text(
                     text = text,

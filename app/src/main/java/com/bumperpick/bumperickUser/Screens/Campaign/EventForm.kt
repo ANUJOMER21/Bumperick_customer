@@ -102,7 +102,7 @@ fun EventForm(
             is UiState.Success -> {
                 isSubmitting = false
                 coroutineScope.launch {
-                    snackbarHostState.showSnackbar("Registration successful!")
+                    snackbarHostState.showSnackbar("Registration completed successfully")
                     onRegistrationSuccess()
                 }
                 onRegistrationSuccess()

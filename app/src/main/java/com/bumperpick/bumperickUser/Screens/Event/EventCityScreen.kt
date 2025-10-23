@@ -153,7 +153,7 @@ fun EventCityScreenMain(
 
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Events in the city",
+                            text = "City today",
                             fontWeight = FontWeight.Bold,
                             fontSize = 22.sp,
                             color = Color.White
@@ -282,7 +282,7 @@ fun EventCityScreenMain(
                 val eventList = (events as UiState.Success<List<DataXXXXXXXX>>).data
                 val filteredList = eventList.filter {
                     it.title.contains(searchQuery, ignoreCase = true)
-                }
+                }.filter { !it.expire }
                 Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                     Icon(painter = painterResource(R.drawable.left),
                         tint = blueColor,

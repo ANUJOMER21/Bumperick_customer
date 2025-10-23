@@ -527,7 +527,7 @@ fun EnhancedLiveStreamSection(
             .padding(vertical=16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // YouTube Live Card with Thumbnail
+        // youtube Live Card with Thumbnail
         if (youtubeVideoId.isNotBlank()) {
             EnhancedYouTubeLiveCard(
                 videoId = youtubeVideoId,
@@ -535,7 +535,7 @@ fun EnhancedLiveStreamSection(
             )
         } else {
             Text(
-                text = "No YouTube live stream available",
+                text = "No youtube live stream available",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray,
                 modifier = Modifier.fillMaxWidth(),
@@ -587,10 +587,16 @@ fun EnhancedLiveStreamSection(
             }
         }
 
-        // Placeholder if no social media buttons are visible
-        if (facebookVideoUrl.isBlank() && instagramUrl.isBlank()) {
+        val text = when {
+            facebookVideoUrl.isBlank() && instagramUrl.isBlank() -> "No social media live streams available"
+            facebookVideoUrl.isBlank() -> "No Facebook live stream available"
+            instagramUrl.isBlank() -> "No Instagram live stream available"
+            else -> null
+        }
+
+        text?.let {
             Text(
-                text = "No social media live streams available",
+                text = it,
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray,
                 modifier = Modifier.fillMaxWidth(),
@@ -637,7 +643,7 @@ private fun EnhancedYouTubeLiveCard(
                         ) {
                             Image(
                                 painter = painterResource(R.drawable.youtube_icon),
-                                contentDescription = "YouTube Icon",
+                                contentDescription = "Youtube Icon",
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -647,7 +653,7 @@ private fun EnhancedYouTubeLiveCard(
 
                     Column {
                         Text(
-                            text = "YouTube live stream",
+                            text = "Youtube live stream",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF1A1A1A)
@@ -691,7 +697,7 @@ private fun EnhancedYouTubeLiveCard(
                 Box(modifier = Modifier.fillMaxSize()) {
                     AsyncImage(
                         model = "https://img.youtube.com/vi/$videoId/maxresdefault.jpg",
-                        contentDescription = "YouTube Thumbnail",
+                        contentDescription = "Youtube Thumbnail",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )

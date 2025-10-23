@@ -74,7 +74,13 @@ fun OfferSearchScreen(
             }
             UiState.Loading -> {}
             is UiState.Success -> {
-                show_toast((fav_toogle as UiState.Success<success_model>).data.message,context)
+                val data=(fav_toogle as UiState.Success<success_model>).data
+                val  message =
+                    if(data.message.contains("Favourite added successfully"))
+                        "Offer added to favourites"
+                    else if(data.message.contains("Favourite removed successfully"))"Offer removed from favourites"
+                    else data.message
+                show_toast(message,context)
             }
         }
     }
@@ -277,7 +283,7 @@ fun SearchCard(
             ) {
                 if (query.isEmpty()) {
                     Text(
-                        text = "Search for \"Reliance mart\"",
+                        text = "Search",
                         color = Color.Gray,
                         fontSize = 18.sp,
                         modifier = Modifier.align(Alignment.CenterStart)

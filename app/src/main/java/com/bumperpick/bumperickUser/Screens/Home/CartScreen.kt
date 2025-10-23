@@ -165,6 +165,7 @@ fun Cart(onBackClick: () -> Unit) {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         item {
+                            val text=if(offerList.size==0)"No offer saved" else if(offerList.size==1) "1 offer saved" else "${offerList.size} offers saved"
                             Spacer(modifier = Modifier.height(16.dp))
                             Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                                 Icon(painter = painterResource(R.drawable.left),
@@ -172,7 +173,7 @@ fun Cart(onBackClick: () -> Unit) {
                                     contentDescription = null, modifier = Modifier.size(12.dp))
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Text(
-                                    text = "${offerList.size} Offers saved",
+                                    text = text,
                                     letterSpacing = 2.sp, // Use sp for text spacing, not dp
                                     color = blueColor,
                                     fontSize = 16.sp,
@@ -199,22 +200,46 @@ fun Cart(onBackClick: () -> Unit) {
                              }
                         }
                         else {
-                            items(filteredList) {
-                                CartOfferView(
-                                    offerModel = it,
-                                    openQr = { id ->
-                                        Log.d("offerid",id)
-                                        offerId = id
-                                        showBottomSheet = true
-                                    },
-                                    deleteCart = {
-                                        viewmodel.deleteCart(it)
+                            if(filteredList.isEmpty()) {
+                                item {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.padding(24.dp)
+                                    ) {
+                                        Image(
+                                            painter = painterResource(R.drawable.artwork),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(100.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(10.dp))
+                                        Text(
+                                            "No offer saved",
+                                            modifier = Modifier.padding(horizontal = 0.dp).fillMaxWidth(),
+                                            textAlign = TextAlign.Center,
+                                            color = blueColor
+                                        )
                                     }
+                                }
+                            }
+                            else {
+                                items(filteredList) {
+                                    CartOfferView(
+                                        offerModel = it,
+                                        openQr = { id ->
+                                            Log.d("offerid", id)
+                                            offerId = id
+                                            showBottomSheet = true
+                                        },
+                                        deleteCart = {
+                                            viewmodel.deleteCart(it)
+                                        }
 
 
-                                )
+                                    )
+                                }
                             }
                         }
+
                     }
                 }
 

@@ -105,7 +105,10 @@ class HomePageViewmodel(val offerRepository: OfferRepository,val eventRepository
             _event_banner.value = when (result) {
                 is Result.Error -> UiState.Error(result.message)
                 Result.Loading -> UiState.Loading
-                is Result.Success -> UiState.Success(result.data.data.take(5).map { it.toEventSlider() })
+                is Result.Success -> UiState.Success(result.data.data
+                    .filter { !it.expire }
+                    .take(5)
+                    .map { it.toEventSlider() })
 
             }
         }
@@ -135,7 +138,14 @@ class HomePageViewmodel(val offerRepository: OfferRepository,val eventRepository
             _fav_toogle_uiState.value =when(result){
                 is Result.Error -> UiState.Error(result.message)
                 Result.Loading -> UiState.Loading
-                is Result.Success -> UiState.Success(result.data)
+                is Result.Success -> {
+                    var response=result.data
+
+
+
+
+                    UiState.Success(response)
+                }
             }
             if(fetch_data_again){
                 getOffers()

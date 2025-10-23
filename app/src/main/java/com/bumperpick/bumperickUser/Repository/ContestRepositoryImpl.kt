@@ -45,7 +45,7 @@ class ContestRepositoryImpl(val dataStoreManager: DataStoreManager,val apiServic
 
         return when (response) {
             is ApiResult.Success -> {
-                if (response.data.code == 200) Result.Success(response.data)
+                if (response.data.code == 200) Result.Success(filterForShowWinner(response.data))
                 else Result.Error(response.data.message)
             }
             is ApiResult.Error -> Result.Error(response.error.message)
@@ -270,6 +270,25 @@ class ContestRepositoryImpl(val dataStoreManager: DataStoreManager,val apiServic
             }
 
 
+    }
+    private suspend fun checkWinnerList(id: Int): Boolean {
+        return when (val contestDetails = ContestDetails(id.toString())) {
+            is Result.Success -> {
+                contestDetails.data.data.contest_registrations.any { it.position != 0 }
+            }
+            else -> false
+        }
+    }
+
+    override suspend fun filterForShowWinner(data: Constest_Model): Constest_Model {
+        // Create a proper copy if Contest_Model is a data class, otherwise this is fine
+        return data.apply {
+            this.data.forEach { contest ->
+                if (contest.is_participated == 1) {
+                    contest.show_winner = (contest.is_winner_announced==1)
+                }
+            }
+        }
     }
 
 

@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -62,6 +63,7 @@ import com.bumperpick.bumperickUser.API.New_model.DataXXXXXXXX
 import com.bumperpick.bumperickUser.API.New_model.EventModel
 import com.bumperpick.bumperickUser.R
 import com.bumperpick.bumperickUser.Screens.Campaign.InfoRow
+import com.bumperpick.bumperickUser.Screens.Component.share
 import com.bumperpick.bumperickUser.Screens.Home.UiState
 import com.bumperpick.bumperickUser.Screens.Home.formatDate
 import com.bumperpick.bumperickUser.ui.theme.BtnColor
@@ -282,7 +284,7 @@ fun EventScreenMain(
                 val eventList = (events as UiState.Success<List<DataXXXXXXXX>>).data
                 val filteredList = eventList.filter {
                     it.title.contains(searchQuery, ignoreCase = true)
-                }
+                }.filter { !it.expire }
                 Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                     Icon(painter = painterResource(R.drawable.left),
                         tint = blueColor,
@@ -373,6 +375,8 @@ fun EventCard2(event: DataXXXXXXXX,onClick:(id:Int)->Unit) {
                         .height(200.dp)
                         .clip(RoundedCornerShape(20.dp))
                 )
+                share(modifier = Modifier.align(Alignment.TopEnd), message = "Check out this amazing event", context = LocalContext.current)
+
             }
 
             // Event Details

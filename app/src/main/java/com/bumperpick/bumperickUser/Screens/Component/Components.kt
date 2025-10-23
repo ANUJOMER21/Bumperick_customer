@@ -1,6 +1,7 @@
 package com.bumperpick.bumperickUser.Screens.Component
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.text.Spannable
 import android.util.Log
@@ -131,6 +132,7 @@ import com.bumperpick.bumperickUser.Navigation.DEEP_LINK_BASE_URL
 import com.bumperpick.bumperickUser.Screens.Home.HomePageViewmodel
 import com.bumperpick.bumperickUser.Screens.Home.Map.LocationData
 import com.bumperpick.bumperickUser.Screens.Home.UiState
+import com.bumperpick.bumperickUser.Screens.Home.shareReferral
 import com.bumperpick.bumperickUser.ui.theme.blueColor
 
 import com.bumperpick.bumperickUser.ui.theme.grey
@@ -687,7 +689,7 @@ private fun ImageSliderItem(
         model=imageUrl,
         contentDescription = "Slider Image",
         modifier = modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.FillBounds
     )
 
 }
@@ -1305,8 +1307,46 @@ fun ReportBottomSheet(
     }
 }
 
-// Data class for ReportModel (if you don't have it already)
+@Composable
+fun share(
+    message: String,
+    context: Context,
+    modifier: Modifier= Modifier, ){
+    Surface(modifier=modifier, color = Color.Transparent) {
+        Box(
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
+                .background(
+                    color = Color.Gray.copy(0.3f),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .border(
+                    0.5.dp,
+                    blueColor,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .clickable {
+                    Log.d("shareoffer", "click")
+                    shareReferral(context,message)
+                }
+                .padding(4.dp),
+        )
+        {
+            Icon(
+                Icons.Default.Share,
+                contentDescription = "Share offer",
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(26.dp),
+                tint =
 
+                    blueColor
+
+            )
+        }
+    }
+
+}
 
 // Data class (already provided by user)
 data class reportModel(val id: String,val title: String)
@@ -1745,8 +1785,8 @@ fun CartOfferView(offerModel: DataXX, openQr: (id: String) -> Unit,deleteCart:(S
                 if(showOpenQrBtn) {
                     ButtonView(
                         text = "Open QR",
-                        color = BtnColor.copy(alpha = 0.2f),
-                        textColor = BtnColor,
+                        color = BtnColor.copy(alpha = 1f),
+                        textColor = Color.White,
                         modifier = Modifier.padding(vertical = 0.dp)
                     ) {
                         openQr(offer?.id.toString())
@@ -1836,6 +1876,7 @@ fun QRCodeBottomSheet(jsonData: String,offerId:String, onAddToCart: () -> Unit,g
             }
             is UiState.Success ->{
                 showloading=false
+                Toast.makeText(context,"Offer saved to the cart", Toast.LENGTH_SHORT).show()
                 Log.d("success","s")
                     viewnodel.resetaddtocart()
                     onAddToCart()
@@ -1899,7 +1940,7 @@ fun SearchCard(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = "Search ",
+    hint: String = "Search",
     onSearch: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current

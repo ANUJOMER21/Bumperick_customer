@@ -588,7 +588,7 @@ fun AccountScreen(accountclick:(AccountClick)->Unit,viewmodel: AccountViewmodel=
                         tint = BtnColor,
                         contentDescription = null, modifier = Modifier.size(30.dp),)
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text(text = "Events in the city", color = Color.Black, fontSize = 16.sp,modifier = Modifier.align(
+                    Text(text = "City today", color = Color.Black, fontSize = 16.sp,modifier = Modifier.align(
                         Alignment.CenterVertically))
                 }
 

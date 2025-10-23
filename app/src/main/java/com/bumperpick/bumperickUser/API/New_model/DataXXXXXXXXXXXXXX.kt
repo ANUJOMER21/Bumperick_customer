@@ -16,5 +16,7 @@ data class DataXXXXXXXXXXXXXX(
     val status: String,
     val terms: String,
     val title: String,
-    val vendor_id: Int
+    val vendor_id: Int,
+    var show_winner: Boolean=false,
+    val is_winner_announced:Int
 )

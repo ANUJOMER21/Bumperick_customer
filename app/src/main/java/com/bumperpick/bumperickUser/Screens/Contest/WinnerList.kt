@@ -30,6 +30,7 @@ import com.bumperpick.bumperickUser.API.New_model.contest_details
 import com.bumperpick.bumperickUser.API.New_model.my_status
 import com.bumperpick.bumperickUser.R
 import com.bumperpick.bumperickUser.Screens.Home.UiState
+import com.bumperpick.bumperickUser.ui.theme.blueColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.koinViewModel
 
@@ -310,9 +311,11 @@ fun AllWinnersCard(registrations: List<Contest_reg>) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            registrations.forEach { registration ->
-                ContestRegistrationItem(registration)
-                Spacer(modifier = Modifier.height(16.dp))
+            registrations
+                .filter { it.position != 0 }
+                .forEach { registration ->
+                 ContestRegistrationItem(registration)
+               Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
@@ -325,7 +328,8 @@ fun ContestRegistrationItem(data: Contest_reg) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-        ) {
+        )
+        {
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -341,23 +345,11 @@ fun ContestRegistrationItem(data: Contest_reg) {
                         color = Color(0xFF000000)
                     )
                 }
-
                 Spacer(modifier = Modifier.height(4.dp))
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Email: ",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = Color(0xFF9E9E9E)
-                    )
-                    Text(
-                        text = data.email,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = Color(0xFF9E9E9E)
-                    )
-                }
+
+
+
             }
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -365,13 +357,13 @@ fun ContestRegistrationItem(data: Contest_reg) {
             PositionDisplay(data.position, data.winner != 0)
         }
 
-        if (data != data) { // Check if not last item (you can adjust this logic)
+     // Check if not last item (you can adjust this logic)
             Divider(
                 modifier = Modifier.padding(top = 16.dp),
                 color = Color(0xFFEEEEEE),
                 thickness = 1.dp
             )
-        }
+
     }
 }
 

@@ -91,14 +91,14 @@ import org.koin.androidx.compose.koinViewModel
 import java.io.File
 import android.content.Context
 import androidx.compose.ui.text.AnnotatedString
+import com.bumperpick.bumperickUser.Navigation.show_toast
 import com.bumperpick.bumperickUser.R
 
 import com.bumperpick.bumperickUser.Screens.Component.withRedAsterisk
 
 
 // Replace this with your actual color and font references
-val BtnColor = Color(0xFF6200EE)
-val satoshi_medium = androidx.compose.ui.text.font.FontFamily.SansSerif
+
 
 fun Context.getFileName(uri: Uri): String {
     var name = "PDF File"
@@ -261,7 +261,7 @@ fun ContestSubmissionForm(
     var linkError by remember { mutableStateOf<String?>(null) }
     var isSubmitting by remember { mutableStateOf(false) }
     var ContestDetail by remember { mutableStateOf<contest_details?>(null) }
-
+    val context=LocalContext.current
     LaunchedEffect(Unit) {
         ContestDetail= viewmodel.fetchContestDetail(contestId)
     }
@@ -288,7 +288,7 @@ fun ContestSubmissionForm(
             is UiState.Success -> {
                 isSubmitting = false
                 coroutineScope.launch {
-                    snackbarHostState.showSnackbar("Submission successful!")
+                    snackbarHostState.showSnackbar("Your entry submitted successfully")
                 }
                 onSubmissionSuccess()
             }
@@ -369,6 +369,8 @@ fun ContestSubmissionForm(
 
     // Handle form submission
     fun handleSubmit() {
+        Log.d("Contest Detail", "handleSubmit: $ContestDetail")
+        if(ContestDetail==null) show_toast("Failed to submit contest entry",context = context)
         ContestDetail?.let {
             if (it.data.contest.is_required_file == 1) {
                 if (validateForm() && !isSubmitting) {
@@ -467,7 +469,7 @@ fun ContestSubmissionForm(
                             )
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
-                                text = "You are already submitted your contest entry.",
+                                text = "You have submitted your contest entry.",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = blueColor
                             )
@@ -505,7 +507,7 @@ fun ContestSubmissionForm(
                                 )
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Text(
-                                    text = "Upload your contest entry with description",
+                                    text = "Please provide relevant details for the entry submission.",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = blueColor
                                 )
@@ -747,7 +749,8 @@ fun ContestSubmissionForm(
                             Text("Submitting...")
                         } else {
                             Icon(
-                                imageVector = Icons.Outlined.Send,
+                                painter = painterResource(R.drawable.send_svgrepo_com),
+                                tint = Color.White,
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp)
                             )

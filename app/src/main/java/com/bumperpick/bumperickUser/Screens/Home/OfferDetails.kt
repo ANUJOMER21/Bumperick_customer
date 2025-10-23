@@ -99,6 +99,7 @@ import com.bumperpick.bumperickUser.API.New_model.Media
 import com.bumperpick.bumperickUser.API.New_model.Offer
 import com.bumperpick.bumperickUser.API.New_model.Review
 import com.bumperpick.bumperickUser.Navigation.DEEP_LINK_BASE_URL
+import com.bumperpick.bumperickUser.Navigation.show_toast
 import com.bumperpick.bumperickUser.R
 import com.bumperpick.bumperickUser.Screens.Component.ButtonView
 import com.bumperpick.bumperickUser.Screens.Component.QRCodeBottomSheet
@@ -201,6 +202,7 @@ fun offerDetail(offer: Offer, onBackClick: () -> Unit,
     val viewmodel:HomePageViewmodel= koinViewModel()
     val ratingstate by viewmodel.rating_state.collectAsState()
     val favtoogle by viewmodel.fav_toogle_uiState.collectAsState()
+    val context=LocalContext.current
     var isFavourite by remember { mutableStateOf(offer.is_favourited) }
     val userid=viewmodel.userId.collectAsState().value
     LaunchedEffect(Unit) {
@@ -214,6 +216,12 @@ fun offerDetail(offer: Offer, onBackClick: () -> Unit,
             is UiState.Success ->{
                 val data=(favtoogle as UiState.Success<success_model>).data
                 if(data.code>=200 && data.code<300){
+                    val  message =
+                        if(data.message.contains("Favourite added successfully"))
+                            "Offer added to favourites"
+                        else if(data.message.contains("Favourite removed successfully"))"Offer removed from favourites"
+                        else data.message
+                    show_toast(message,context)
                     if(data.status.equals("removed")) isFavourite=false
                     else isFavourite=true
                 }
@@ -223,7 +231,7 @@ fun offerDetail(offer: Offer, onBackClick: () -> Unit,
 
 
     var is_saved by remember { mutableStateOf(false) }
-    val context=LocalContext.current
+
     var showRatingSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -253,7 +261,7 @@ fun offerDetail(offer: Offer, onBackClick: () -> Unit,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp),
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.FillBounds
                     )
 
                     // Gradient Overlay
@@ -744,7 +752,7 @@ fun ReviewScreen(reviews: List<Review>) {
                     color = Color.Black.copy(alpha = 0.6f)
                 )
                 Text(
-                    text = "Reviews will appear here once customers start leaving feedback",
+                    text = "Reviews will appear here when customer provides feedback",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp,
                     color = Color.Black.copy(alpha = 0.4f),
